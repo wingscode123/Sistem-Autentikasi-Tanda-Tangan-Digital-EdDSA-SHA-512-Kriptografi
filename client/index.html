@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistem Autentikasi EdDSA - Proyek Kriptografi</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🔐 Sistem Autentikasi EdDSA</h1>
+        <p>Implementasi Tanda Tangan Digital Ed25519 dengan Hash SHA-512</p>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" data-tab="about">ℹ️ Tentang Proyek</button>
+        <button class="tab" data-tab="register">📝 Registrasi</button>
+        <button class="tab" data-tab="login">🔑 Login</button>
+        <button class="tab" data-tab="users">👥 Daftar User</button>
+        <button class="tab" data-tab="evaluation">📊 Evaluasi</button>
+      </div>
+
+      <div id="about" class="tab-content active">
+        <div class="section">
+          <h3>Selamat Datang di Proyek Autentikasi EdDSA</h3>
+          <p style="line-height: 1.6; margin-bottom: 20px">
+            Proyek ini adalah implementasi sistem autentikasi modern yang
+            menggantikan penggunaan password tradisional dengan
+            <strong>Tanda Tangan Digital (Digital Signature)</strong> Tujuannya
+            adalah untuk mendemonstrasikan sebuah metode login yang lebih aman,
+            efisien, dan tahan terhadap serangan siber umum seperti phishing dan
+            pencurian database.
+          </p>
+
+          <h4>Teknologi yang Digunakan</h4>
+          <ul style="margin-left: 20px; line-height: 1.7">
+            <li>
+              <strong>EdDSA (Ed25519):</strong> Algoritma tanda tangan digital
+              berbasis kurva eliptik yang dikenal sangat cepat dan aman.
+            </li>
+            <li>
+              <strong>SHA-512:</strong> Fungsi hash kriptografis untuk membuat
+              "sidik jari" digital dari data sebelum ditandatangani.
+            </li>
+          </ul>
+
+          <hr style="margin: 20px 0; border: 1px solid #eee" />
+
+          <h4>Bagaimana Cara Kerjanya?</h4>
+          <ol style="margin-left: 20px; line-height: 1.7">
+            <li>
+              <strong>Registrasi:</strong> Pengguna membuat sepasang kunci:
+              <ul>
+                <li>
+                  <strong>Public Key:</strong> Kunci yang boleh dibagikan dan
+                  disimpan di server untuk verifikasi.
+                </li>
+                <li>
+                  <strong>Private Key:</strong> Kunci rahasia yang disimpan oleh
+                  pengguna dan tidak pernah meninggalkan perangkatnya.
+                </li>
+              </ul>
+            </li>
+            <li>
+              <strong>Login (Challenge-Response):</strong>
+              <ul>
+                <li>
+                  Server memberikan sebuah "tantangan" (challenge) acak yang
+                  unik setiap kali login.
+                </li>
+                <li>
+                  Pengguna "menandatangani" challenge tersebut menggunakan
+                  <strong>private key</strong> mereka.
+                </li>
+                <li>
+                  Server memverifikasi tanda tangan menggunakan
+                  <strong>public key</strong>
+                  yang tersimpan. Jika valid, login berhasil.
+                </li>
+              </ul>
+            </li>
+          </ol>
+          <p style="margin-top: 20px">
+            Model ini memastikan bahwa tidak ada password yang perlu disimpan
+            atau dikirim melalui jaringan, sehingga secara signifikan
+            meningkatkan keamanan.
+          </p>
+        </div>
+      </div>
+
+      <div id="register" class="tab-content">
+        <div class="section">
+          <h3>🎯 Registrasi User Baru</h3>
+          <div class="form-group">
+            <label for="regUsername">Username:</label>
+            <input
+              type="text"
+              id="regUsername"
+              placeholder="Masukkan username"
+            />
+          </div>
+          <button class="btn" id="generateBtn">🔑 Generate Key Pair</button>
+          <button class="btn" id="registerBtn" disabled>📝 Daftar User</button>
+          <div id="keyGenResult"></div>
+        </div>
+      </div>
+
+      <div id="login" class="tab-content">
+        <div class="section">
+          <h3>🔐 Login dengan Tanda Tangan Digital</h3>
+          <div class="form-group">
+            <label for="loginUsername">Username:</label>
+            <input
+              type="text"
+              id="loginUsername"
+              placeholder="Masukkan username"
+            />
+          </div>
+          <div class="form-group">
+            <label for="privateKey">Private Key (Hex):</label>
+            <input
+              type="text"
+              id="privateKey"
+              placeholder="Salin-tempel private key Anda dari proses registrasi"
+            />
+          </div>
+          <button class="btn" id="loginBtn">🚀 Login</button>
+          <div id="loginResult"></div>
+        </div>
+      </div>
+
+      <div id="users" class="tab-content">
+        <div class="section">
+          <h3>👥 Daftar User Terdaftar</h3>
+          <button class="btn" id="refreshUsersBtn">🔄 Refresh</button>
+          <div id="userList"></div>
+        </div>
+      </div>
+
+      <div id="evaluation" class="tab-content">
+        <div class="section">
+          <h3>📊 Evaluasi Performa & Keamanan</h3>
+
+          <h4>Uji Performa</h4>
+          <button class="btn" id="runPerfTestBtn">
+            🏃 Jalankan Test Performa
+          </button>
+
+          <hr style="margin: 20px 0; border: 1px solid #eee" />
+
+          <h4>Simulasi Serangan</h4>
+          <p style="margin-bottom: 15px">
+            Jalankan simulasi untuk memahami bagaimana sistem ini bertahan dari
+            serangan umum.
+          </p>
+
+          <button class="btn" id="runReplayAttackBtn">
+            🔄 Jalankan Replay Attack
+          </button>
+          <button class="btn" id="runBruteForceBtn">
+            🔢 Simulasi Brute Force Key
+          </button>
+          <div id="simulationResult" style="margin-top: 20px"></div>
+        </div>
+      </div>
+    </div>
+    <script src="nacl.min.js"></script>
+    <script src="nacl.util.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
