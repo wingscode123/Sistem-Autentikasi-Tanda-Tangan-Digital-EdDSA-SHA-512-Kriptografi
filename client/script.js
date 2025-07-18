@@ -1,14 +1,14 @@
 // script.js (versi Client-Server)
 
 document.addEventListener("DOMContentLoaded", () => {
-  const SERVER_URL = "http://localhost:3000"; // Alamat server kita
+  const SERVER_URL = "http://localhost:3000"; // Alamat server
 
   // State, DOM Elements, dan Utility Functions
   let generatedKeys = null;
   let users = {}; // Ini sekarang akan diisi dari server
   let capturedLoginData = null;
 
-  // ... (DOM Elements sama seperti sebelumnya) ...
+  // DOM Elements
   const tabs = document.querySelectorAll(".tab");
   const tabContents = document.querySelectorAll(".tab-content");
   const generateBtn = document.getElementById("generateBtn");
@@ -258,7 +258,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>`;
   }
 
-  // Fungsi simulasi serangan tetap sama
+  // Fungsi Simulasi Replay Attack
   async function simulateReplayAttack() {
     if (!capturedLoginData) {
       simulationResultDiv.innerHTML = `<div class="error"><strong>Gagal:</strong> Belum ada data login yang berhasil "direkam". Silakan login dengan benar terlebih dahulu di tab "Login".</div>`;
@@ -307,6 +307,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Fungsi Simulasi Brute Force
   async function simulateBruteForce() {
     simulationResultDiv.innerHTML = `<div class="info">Memulai simulasi Brute Force...</div><div class="login-log"></div>`;
     const log = simulationResultDiv.querySelector(".login-log");

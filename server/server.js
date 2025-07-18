@@ -88,7 +88,6 @@ app.post('/login-verify', (req, res) => {
     }
 
     // Penting: Server harus melakukan hash-nya sendiri terhadap challenge asli yang ia simpan.
-    // Jangan pernah percaya hash dari client.
     const encoder = new TextEncoder();
     const data = encoder.encode(originalChallenge);
 
