@@ -62,7 +62,7 @@ Untuk menjalankan proyek ini di komputer Anda, ikuti langkah-langkah berikut:
 
 ### 1. Prasyarat
 
--   Pastikan Anda sudah menginstall **Node.js** (versi 16 atau lebih baru).
+-   Pastikan sudah menginstall **Node.js** (versi 16 atau lebih baru).
 
 ### 2. Instalasi
 
@@ -98,7 +98,7 @@ Anda perlu menjalankan **dua terminal** secara bersamaan.
 3.  Anda akan melihat pesan bahwa server berjalan, biasanya di `http://localhost:5000`.
 
 **Buka Browser:**
--   Buka browser web Anda dan akses alamat berikut:
+-   Buka browser web dan akses alamat berikut:
     > **http://localhost:5000**
 
 Aplikasi sekarang siap digunakan!
